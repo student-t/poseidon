@@ -1,9 +1,11 @@
-# poseidon
+# Poseidon project - open source bioinstrumentation
+
+Poseidon is an open source bioinstrumentation project. The goal is to develop instruments that are readily adoptable by biology labs.
 
 ## Open source syringe pumps and Raspberry Pi microscope
 ![mvimg_20180111_222424](https://user-images.githubusercontent.com/12504176/34991157-69e99c68-fa7d-11e7-8a77-660660820391.jpg)
 
-## All the parts for 3 pumps and a microscope cost under $400: 
+## All the parts for 3 pumps and a microscope cost under $400
 ![mvimg_20180111_211022](https://user-images.githubusercontent.com/12504176/34991323-0a6b41aa-fa7e-11e7-8e57-fbb78b54cc67.jpg)
 
 
