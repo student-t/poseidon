@@ -25,6 +25,4 @@ The software is configured to run the stepper motors with 200 steps per revoluti
  *Coming soon*
  
  ## Instructions for the pump Python controller
- 
- *Coming soon*
-
+Before stating the python controller, make sure the Arduino is connected via USB to the computer or Rapsberry Pi microscope, that the CNC shield is powered, and that the 3 motors are plugged in. Test to see that they are moving in the correct direciton when expelling, if not simply invert the stepper motor connector orientation.
