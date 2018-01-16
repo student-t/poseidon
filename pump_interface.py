@@ -29,7 +29,7 @@ class Pump_interface(QWidget):
         self.initGlobalVariables()
 
     def initHardwareConstants(self):
-        self.steps_per_rev = 6400
+        self.steps_per_rev = 800
         self.mm_per_rev = 0.8
         self.syringe_mm_per_ml_dict = {}
         self.syringe_mm_per_ml_dict["3mL"] = 17.0
