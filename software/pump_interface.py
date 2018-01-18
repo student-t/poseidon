@@ -26,21 +26,22 @@ class SytemNotDeterminedException(Exception):
 
 # Platform-dependent include and platform determination
 platform_name = ""
-platform_information = os.uname()
-if platform_information[1]=="raspberrypi" and \
-        platform_information[4][:3]=="arm":
-    import picamera
-    platform_name = "raspi"
-elif platform_information[0]=="Linux" and \
-        platform_information[4][:3]=="x86":
-    plaform_name = "linux"
-elif platform.system()=="Windows":
+if platform.system()=="Windows":
     platform_name = "windows"
 elif platform.system()=="Darwin":
     platform_name = "mac"
 else:
-    raise SystemNotDeterminedException( \
-            "What strange system are you running on?")
+    platform_information = os.uname()
+    if platform_information[1]=="raspberrypi" and \
+            platform_information[4][:3]=="arm":
+        import picamera
+        platform_name = "raspi"
+    elif platform_information[0]=="Linux" and \
+            platform_information[4][:3]=="x86":
+        plaform_name = "linux"
+    else:
+        raise SystemNotDeterminedException( \
+                "What strange system are you running on?")
 
 
 class QHLine(QFrame):
