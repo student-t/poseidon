@@ -22,6 +22,10 @@ The software is configured to run the stepper motors with 200 steps per revoluti
 
 ![microsteppingpng](https://user-images.githubusercontent.com/12504176/34992088-d2e04ca0-fa80-11e7-9dde-99b1894fbe5c.PNG)
 
+Here is how the board looks with the stepper motors connected:
+
+![full_board](https://user-images.githubusercontent.com/12504176/35099661-b8e55262-fc0d-11e7-86df-f2927111ce1a.PNG)
+
 
 ## Assembly of the Raspberry Pi microscope 
  *Coming soon*
