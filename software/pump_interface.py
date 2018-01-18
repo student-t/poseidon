@@ -1,19 +1,45 @@
 #!/usr/bin/python3
 
 # pump_interface.py
-# A PyQt5-based interface for running the open-source
-# microfluidic pumps.
+# A PyQt5-based interface for running the open-source Poseidon microfludic 
+# pumps.
 
+# Python standard library includes
 import sys
-#import logging
 import time
-#import picamera
-from pymata_aio.pymata3 import PyMata3
+import os
+import platform
 
+# Non-standard Python library includes
 from PyQt5.QtCore import Qt, pyqtSlot, QPoint, QTimer
 from PyQt5.QtWidgets import (QApplication, QLabel, QWidget, QGridLayout,
                              QSpinBox, QComboBox, QPushButton, QTabWidget,
                              QDoubleSpinBox)
+
+# Local intra-package includes
+from pymata_aio.pymata3 import PyMata3
+
+# Define custom exception for handling system-dependent imports
+class SytemNotDeterminedException(Exception):
+    pass
+
+# Platform-dependent include and platform determination
+platform_name = ""
+platform_information = os.uname()
+if platform_information[1]=="raspberrypi" and \
+        platform_information[4][:3]=="arm":
+    import picamera
+    platform_name = "raspi"
+elif platform_information[0]=="Linux" and \
+        platform_information[4][:3]=="x86":
+    plaform_name = "linux"
+elif platform.system()=="Windows":
+    platform_name = "windows"
+elif platform.system()=="Darwin":
+    platform_name = "mac"
+else:
+    raise SystemNotDeterminedException( \
+            "What strange system are you running on?")
 
 
 class Pump_interface(QWidget):
@@ -24,7 +50,8 @@ class Pump_interface(QWidget):
         self.initHardwareConstants()
         self.initBoard()
         self.initUIrefreshLoop()
-        #self.camera = picamera.PiCamera()
+        if platform_name=="raspi":
+            self.camera = picamera.PiCamera()
         self.initUI()
         self.initGlobalVariables()
 
@@ -214,7 +241,8 @@ class Pump_interface(QWidget):
         #self.start_mixer_two = QPushButton('Start Mixer 2', self)
         
         ## Camera Tab
-        self.view_camera = QPushButton('View Camera', self)
+        if platform_name=="raspi":
+            self.view_camera = QPushButton('View Camera', self)
 
 
     def style_widgets(self):
@@ -262,7 +290,8 @@ class Pump_interface(QWidget):
         self.pump_three_stop.clicked.connect( self.stop_button_click )
         self.stop_all_pumps.clicked.connect( self.stop_all_pumps_button_click )
 
-        self.view_camera.clicked.connect( self.camera_preview )
+        if platform_name=="raspi":
+            self.view_camera.clicked.connect( self.camera_preview )
 
     def place_widgets(self):
 
@@ -270,10 +299,12 @@ class Pump_interface(QWidget):
         self.tabs = QTabWidget(self)
         self.tab1 = QWidget(self)
         #self.tab2 = QWidget(self)
-        self.tab3 = QWidget(self)
+        if platform_name=="raspi":
+            self.tab3 = QWidget(self)
         self.tabs.addTab(self.tab1, "Pumps")
         #self.tabs.addTab(self.tab2, "Mixers")
-        self.tabs.addTab(self.tab3, "Camera")
+        if platform_name=="raspi":
+            self.tabs.addTab(self.tab3, "Camera")
 
         ## Tab 1 Layout
         self.tab1_grid = QGridLayout()
@@ -356,15 +387,17 @@ class Pump_interface(QWidget):
         #self.tab2_grid.addWidget(self.start_mixer_two, 1, 2, 1, 2)
         
         ## Tab 3 Layout
-        self.tab3_grid = QGridLayout()
-        self.tab3_grid.setSpacing(10)
-        self.tab3_grid.addWidget(self.view_camera, 1, 0, 1, 2)
+        if platform_name=="raspi":
+            self.tab3_grid = QGridLayout()
+            self.tab3_grid.setSpacing(10)
+            self.tab3_grid.addWidget(self.view_camera, 1, 0, 1, 2)
         
         
         #self.setLayout(grid)
         self.tab1.setLayout(self.tab1_grid)
         #self.tab2.setLayout(self.tab2_grid)
-        self.tab3.setLayout(self.tab3_grid)
+        if platform_name=="raspi":
+            self.tab3.setLayout(self.tab3_grid)
         self.tab_layout = QGridLayout(self)
         self.tab_layout.addWidget(self.tabs)
 
