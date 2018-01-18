@@ -47,13 +47,14 @@ class Pump_interface(QWidget):
     def __init__(self):
         super().__init__()
 
+        if platform_name=="raspi":
+            self.camera = picamera.PiCamera()
+        
         self.initHardwareConstants()
         self.initBoard()
         self.initUIrefreshLoop()
-        if platform_name=="raspi":
-            self.camera = picamera.PiCamera()
-        self.initUI()
         self.initGlobalVariables()
+        self.initUI()
 
     def initHardwareConstants(self):
         self.steps_per_rev = 800
@@ -114,29 +115,90 @@ class Pump_interface(QWidget):
         self.create_widgets()
         self.style_widgets()
         self.attach_widget_callbacks()
-        self.place_widgets()
+        if platform_name=="raspi":
+            self.place_widgets_raspi()
+        else:
+            self.place_widgets()
 
     def create_widgets(self):
         ## Pumps Tab -- titles
-        self.title_speed_label = QLabel("Speed", self)
-        self.title_speed_label.setAlignment(Qt.AlignHCenter)
-        self.title_distance_label = QLabel("Distance", self)
-        self.title_distance_label.setAlignment(Qt.AlignHCenter)
-        self.title_direction_label = QLabel("Direction", self)
-        self.title_direction_label.setAlignment(Qt.AlignHCenter)
-        self.title_syringe_label = QLabel("Syringe", self)
-        self.title_syringe_label.setAlignment(Qt.AlignHCenter)
-        self.title_speed_readout_label = QLabel("Current Speed", self)
-        self.title_speed_readout_label.setAlignment(Qt.AlignHCenter)
-        self.title_distance_traveled_label = QLabel(
-                "Distance Traveled", self)
-        self.title_distance_traveled_label.setAlignment(Qt.AlignHCenter)
-        self.title_distance_set_label = QLabel("Distance Set", self)
-        self.title_distance_set_label.setAlignment(Qt.AlignHCenter)
-        self.title_distance_remaining_label = QLabel(
-                "Distance Remaining", self)
-        self.title_distance_remaining_label.setAlignment(Qt.AlignHCenter)
-        
+        if platform_name=="raspi":
+            self.pump_one_speed_label = QLabel("Speed", self)
+            self.pump_one_speed_label.setAlignment(Qt.AlignHCenter)
+            self.pump_one_distance_label = QLabel("Distance", self)
+            self.pump_one_distance_label.setAlignment(Qt.AlignHCenter)
+            self.pump_one_direction_label = QLabel("Direction", self)
+            self.pump_one_direction_label.setAlignment(Qt.AlignHCenter)
+            self.pump_one_syringe_label = QLabel("Syringe", self)
+            self.pump_one_syringe_label.setAlignment(Qt.AlignHCenter)
+            self.pump_one_speed_readout_label = QLabel("Current Speed", self)
+            self.pump_one_speed_readout_label.setAlignment(Qt.AlignHCenter)
+            self.pump_one_distance_traveled_label = QLabel(
+                    "Distance Traveled", self)
+            self.pump_one_distance_traveled_label.setAlignment(Qt.AlignHCenter)
+            self.pump_one_distance_set_label = QLabel("Distance Set", self)
+            self.pump_one_distance_set_label.setAlignment(Qt.AlignHCenter)
+            self.pump_one_distance_remaining_label = QLabel(
+                    "Distance Remaining", self)
+            self.pump_one_distance_remaining_label.setAlignment(Qt.AlignHCenter)
+
+            self.pump_two_speed_label = QLabel("Speed", self)
+            self.pump_two_speed_label.setAlignment(Qt.AlignHCenter)
+            self.pump_two_distance_label = QLabel("Distance", self)
+            self.pump_two_distance_label.setAlignment(Qt.AlignHCenter)
+            self.pump_two_direction_label = QLabel("Direction", self)
+            self.pump_two_direction_label.setAlignment(Qt.AlignHCenter)
+            self.pump_two_syringe_label = QLabel("Syringe", self)
+            self.pump_two_syringe_label.setAlignment(Qt.AlignHCenter)
+            self.pump_two_speed_readout_label = QLabel("Current Speed", self)
+            self.pump_two_speed_readout_label.setAlignment(Qt.AlignHCenter)
+            self.pump_two_distance_traveled_label = QLabel(
+                    "Distance Traveled", self)
+            self.pump_two_distance_traveled_label.setAlignment(Qt.AlignHCenter)
+            self.pump_two_distance_set_label = QLabel("Distance Set", self)
+            self.pump_two_distance_set_label.setAlignment(Qt.AlignHCenter)
+            self.pump_two_distance_remaining_label = QLabel(
+                    "Distance Remaining", self)
+            self.pump_two_distance_remaining_label.setAlignment(Qt.AlignHCenter)
+
+            self.pump_three_speed_label = QLabel("Speed", self)
+            self.pump_three_speed_label.setAlignment(Qt.AlignHCenter)
+            self.pump_three_distance_label = QLabel("Distance", self)
+            self.pump_three_distance_label.setAlignment(Qt.AlignHCenter)
+            self.pump_three_direction_label = QLabel("Direction", self)
+            self.pump_three_direction_label.setAlignment(Qt.AlignHCenter)
+            self.pump_three_syringe_label = QLabel("Syringe", self)
+            self.pump_three_syringe_label.setAlignment(Qt.AlignHCenter)
+            self.pump_three_speed_readout_label = QLabel("Current Speed", self)
+            self.pump_three_speed_readout_label.setAlignment(Qt.AlignHCenter)
+            self.pump_three_distance_traveled_label = QLabel(
+                    "Distance Traveled", self)
+            self.pump_three_distance_traveled_label.setAlignment(Qt.AlignHCenter)
+            self.pump_three_distance_set_label = QLabel("Distance Set", self)
+            self.pump_three_distance_set_label.setAlignment(Qt.AlignHCenter)
+            self.pump_three_distance_remaining_label = QLabel(
+                    "Distance Remaining", self)
+            self.pump_three_distance_remaining_label.setAlignment(Qt.AlignHCenter)
+        else:
+            self.title_speed_label = QLabel("Speed", self)
+            self.title_speed_label.setAlignment(Qt.AlignHCenter)
+            self.title_distance_label = QLabel("Distance", self)
+            self.title_distance_label.setAlignment(Qt.AlignHCenter)
+            self.title_direction_label = QLabel("Direction", self)
+            self.title_direction_label.setAlignment(Qt.AlignHCenter)
+            self.title_syringe_label = QLabel("Syringe", self)
+            self.title_syringe_label.setAlignment(Qt.AlignHCenter)
+            self.title_speed_readout_label = QLabel("Current Speed", self)
+            self.title_speed_readout_label.setAlignment(Qt.AlignHCenter)
+            self.title_distance_traveled_label = QLabel(
+                    "Distance Traveled", self)
+            self.title_distance_traveled_label.setAlignment(Qt.AlignHCenter)
+            self.title_distance_set_label = QLabel("Distance Set", self)
+            self.title_distance_set_label.setAlignment(Qt.AlignHCenter)
+            self.title_distance_remaining_label = QLabel(
+                    "Distance Remaining", self)
+            self.title_distance_remaining_label.setAlignment(Qt.AlignHCenter)
+
         ## Pumps Tab -- Pump-specific
         self.pump_one_label = QLabel("Pump One", self)
         self.pump_two_label = QLabel("Pump Two", self)
@@ -298,13 +360,7 @@ class Pump_interface(QWidget):
         ## Tabs
         self.tabs = QTabWidget(self)
         self.tab1 = QWidget(self)
-        #self.tab2 = QWidget(self)
-        if platform_name=="raspi":
-            self.tab3 = QWidget(self)
         self.tabs.addTab(self.tab1, "Pumps")
-        #self.tabs.addTab(self.tab2, "Mixers")
-        if platform_name=="raspi":
-            self.tabs.addTab(self.tab3, "Camera")
 
         ## Tab 1 Layout
         self.tab1_grid = QGridLayout()
@@ -380,27 +436,150 @@ class Pump_interface(QWidget):
         self.tab1_grid.addWidget(self.run_all_pumps, 5, 6, 1, 2)
         self.tab1_grid.addWidget(self.stop_all_pumps, 5, 8, 1, 2)
         
-        ## Tab 2 Layout
-        #self.tab2_grid = QGridLayout()
-        #self.tab2_grid.setSpacing(10)
-        #self.tab2_grid.addWidget(self.start_mixer_one, 1, 0, 1, 2)
-        #self.tab2_grid.addWidget(self.start_mixer_two, 1, 2, 1, 2)
-        
-        ## Tab 3 Layout
-        if platform_name=="raspi":
-            self.tab3_grid = QGridLayout()
-            self.tab3_grid.setSpacing(10)
-            self.tab3_grid.addWidget(self.view_camera, 1, 0, 1, 2)
-        
-        
-        #self.setLayout(grid)
+        # Add tabs to main window
         self.tab1.setLayout(self.tab1_grid)
-        #self.tab2.setLayout(self.tab2_grid)
-        if platform_name=="raspi":
-            self.tab3.setLayout(self.tab3_grid)
         self.tab_layout = QGridLayout(self)
         self.tab_layout.addWidget(self.tabs)
 
+        # Deploy window
+        self.setGeometry(300,300,300,300)
+        self.setWindowTitle("Poseidon Pumps")
+        self.show()
+
+    def place_widgets_raspi(self):
+
+        ## Tabs
+        self.tabs = QTabWidget(self)
+        self.tab1 = QWidget(self)
+        self.tab2 = QWidget(self)
+        self.tabs.addTab(self.tab1, "Pumps")
+        self.tabs.addTab(self.tab2, "Camera")
+
+        ## Tab 1 Layout
+        self.tab1_grid = QGridLayout()
+        self.tab1_grid.setSpacing(10)
+
+        # Row 1
+        self.tab1_grid.addWidget(self.pump_one_label, 1, 0, 4, 1)
+        self.tab1_grid.addWidget(self.pump_one_speed_label, 1, 1, 1, 2)
+        self.tab1_grid.addWidget(self.pump_one_distance_label, 1, 3, 1, 2)
+        self.tab1_grid.addWidget(self.pump_one_direction_label, 1, 5)
+        self.tab1_grid.addWidget(self.pump_one_syringe_label, 1, 6)
+
+        # Row 2
+        self.tab1_grid.addWidget(self.pump_one_speed, 2, 1)
+        self.tab1_grid.addWidget(self.pump_one_speed_units, 2, 2)
+        self.tab1_grid.addWidget(self.pump_one_distance, 2, 3)
+        self.tab1_grid.addWidget(self.pump_one_distance_units, 2, 4)
+        self.tab1_grid.addWidget(self.pump_one_direction, 2, 5)
+        self.tab1_grid.addWidget(self.pump_one_syringe, 2, 6)
+        self.tab1_grid.addWidget(self.pump_one_run, 2, 7)
+        self.tab1_grid.addWidget(self.pump_one_stop, 2, 8)
+
+        # Row 3
+        self.tab1_grid.addWidget(self.pump_one_speed_readout_label, 3, 1, 1, 2)
+        self.tab1_grid.addWidget(self.pump_one_distance_traveled_label, 
+                3, 3, 1, 2)
+        self.tab1_grid.addWidget(self.pump_one_distance_set_label, 3, 5, 1, 2)
+        self.tab1_grid.addWidget(self.pump_one_distance_remaining_label, 
+                3, 7, 1, 2)
+        
+        # Row 4
+        self.tab1_grid.addWidget(self.pump_one_speed_readout, 4, 1)
+        self.tab1_grid.addWidget(self.pump_one_speed_units_readout, 4, 2)
+        self.tab1_grid.addWidget(self.pump_one_distance_traveled, 4, 3)
+        self.tab1_grid.addWidget(self.pump_one_distance_traveled_units, 4, 4)
+        self.tab1_grid.addWidget(self.pump_one_distance_set, 4, 5)
+        self.tab1_grid.addWidget(self.pump_one_distance_set_units, 4, 6)
+        self.tab1_grid.addWidget(self.pump_one_distance_remaining, 4, 7)
+        self.tab1_grid.addWidget(self.pump_one_distance_remaining_units, 4, 8)
+        
+        # Row 5
+        self.tab1_grid.addWidget(self.pump_two_label, 5, 0, 4, 1)
+        self.tab1_grid.addWidget(self.pump_two_speed_label, 5, 1, 1, 2)
+        self.tab1_grid.addWidget(self.pump_two_distance_label, 5, 3, 1, 2)
+        self.tab1_grid.addWidget(self.pump_two_direction_label, 5, 5)
+        self.tab1_grid.addWidget(self.pump_two_syringe_label, 5, 6)
+
+        # Row 6
+        self.tab1_grid.addWidget(self.pump_two_speed, 6, 1)
+        self.tab1_grid.addWidget(self.pump_two_speed_units, 6, 2)
+        self.tab1_grid.addWidget(self.pump_two_distance, 6, 3)
+        self.tab1_grid.addWidget(self.pump_two_distance_units, 6, 4)
+        self.tab1_grid.addWidget(self.pump_two_direction, 6, 5)
+        self.tab1_grid.addWidget(self.pump_two_syringe, 6, 6)
+        self.tab1_grid.addWidget(self.pump_two_run, 6, 7)
+        self.tab1_grid.addWidget(self.pump_two_stop, 6, 8)
+
+        # Row 7
+        self.tab1_grid.addWidget(self.pump_two_speed_readout_label, 7, 1, 1, 2)
+        self.tab1_grid.addWidget(self.pump_two_distance_traveled_label, 
+                7, 3, 1, 2)
+        self.tab1_grid.addWidget(self.pump_two_distance_set_label, 7, 5, 1, 2)
+        self.tab1_grid.addWidget(self.pump_two_distance_remaining_label, 
+                7, 7, 1, 2)
+        
+        # Row 8
+        self.tab1_grid.addWidget(self.pump_two_speed_readout, 8, 1)
+        self.tab1_grid.addWidget(self.pump_two_speed_units_readout, 8, 2)
+        self.tab1_grid.addWidget(self.pump_two_distance_traveled, 8, 3)
+        self.tab1_grid.addWidget(self.pump_two_distance_traveled_units, 8, 4)
+        self.tab1_grid.addWidget(self.pump_two_distance_set, 8, 5)
+        self.tab1_grid.addWidget(self.pump_two_distance_set_units, 8, 6)
+        self.tab1_grid.addWidget(self.pump_two_distance_remaining, 8, 7)
+        self.tab1_grid.addWidget(self.pump_two_distance_remaining_units, 8, 8)
+        
+        # Row 9
+        self.tab1_grid.addWidget(self.pump_three_label, 9, 0, 4, 1)
+        self.tab1_grid.addWidget(self.pump_three_speed_label, 9, 1, 1, 2)
+        self.tab1_grid.addWidget(self.pump_three_distance_label, 9, 3, 1, 2)
+        self.tab1_grid.addWidget(self.pump_three_direction_label, 9, 5)
+        self.tab1_grid.addWidget(self.pump_three_syringe_label, 9, 6)
+
+        # Row 10
+        self.tab1_grid.addWidget(self.pump_three_speed, 10, 1)
+        self.tab1_grid.addWidget(self.pump_three_speed_units, 10, 2)
+        self.tab1_grid.addWidget(self.pump_three_distance, 10, 3)
+        self.tab1_grid.addWidget(self.pump_three_distance_units, 10, 4)
+        self.tab1_grid.addWidget(self.pump_three_direction, 10, 5)
+        self.tab1_grid.addWidget(self.pump_three_syringe, 10, 6)
+        self.tab1_grid.addWidget(self.pump_three_run, 10, 7)
+        self.tab1_grid.addWidget(self.pump_three_stop, 10, 8)
+
+        # Row 11
+        self.tab1_grid.addWidget(self.pump_three_speed_readout_label, 11, 1, 1, 2)
+        self.tab1_grid.addWidget(self.pump_three_distance_traveled_label, 
+                11, 3, 1, 2)
+        self.tab1_grid.addWidget(self.pump_three_distance_set_label, 11, 5, 1, 2)
+        self.tab1_grid.addWidget(self.pump_three_distance_remaining_label, 
+                11, 7, 1, 2)
+        
+        # Row 12
+        self.tab1_grid.addWidget(self.pump_three_speed_readout, 12, 1)
+        self.tab1_grid.addWidget(self.pump_three_speed_units_readout, 12, 2)
+        self.tab1_grid.addWidget(self.pump_three_distance_traveled, 12, 3)
+        self.tab1_grid.addWidget(self.pump_three_distance_traveled_units, 12, 4)
+        self.tab1_grid.addWidget(self.pump_three_distance_set, 12, 5)
+        self.tab1_grid.addWidget(self.pump_three_distance_set_units, 12, 6)
+        self.tab1_grid.addWidget(self.pump_three_distance_remaining, 12, 7)
+        self.tab1_grid.addWidget(self.pump_three_distance_remaining_units, 12, 8)
+        
+        # Row 13
+        self.tab1_grid.addWidget(self.run_all_pumps, 13, 1, 1, 2)
+        self.tab1_grid.addWidget(self.stop_all_pumps, 13, 5, 1, 2)
+        
+        ## Tab 2 Layout
+        self.tab2_grid = QGridLayout()
+        self.tab2_grid.setSpacing(10)
+        self.tab2_grid.addWidget(self.view_camera, 1, 0, 1, 2)
+        
+       # Add tabs to main window 
+        self.tab1.setLayout(self.tab1_grid)
+        self.tab2.setLayout(self.tab2_grid)
+        self.tab_layout = QGridLayout(self)
+        self.tab_layout.addWidget(self.tabs)
+
+        # Deploy window
         self.setGeometry(300,300,300,300)
         self.setWindowTitle("Poseidon Pumps")
         self.show()
