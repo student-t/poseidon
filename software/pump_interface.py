@@ -364,6 +364,10 @@ class Pump_interface(QWidget):
             self.title_distance_label.setFont(header_font)
             self.title_direction_label.setFont(header_font)
             self.title_syringe_label.setFont(header_font)
+            self.title_speed_readout_label.setFont(header_font)
+            self.title_distance_traveled_label.setFont(header_font)
+            self.title_distance_set_label.setFont(header_font)
+            self.title_distance_remaining_label.setFont(header_font)
 
         # Set some necessary names
         self.pump_one_run.setObjectName('pump_one_run')
